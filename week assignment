@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+/**
+ * Write a description of class FixedDeposit here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class FixedDeposit
+{
+    public static void main(String[] args){
+    
+        Scanner scanner = new Scanner(System.in);
+        double principal, annualRate, monthlyRate, maturityAmount, feeRate = 0.005, fee, finalAmount;
+        int years, months;
+
+        while (true) {
+            System.out.print("Enter the deposit amount (minimum Rs. 1000, or -1 to exit): ");
+            principal = scanner.nextDouble();
+            if (principal == -1) break;
+            if (principal < 1000) {
+                System.out.println("Minimum deposit is Rs. 1000. Please try again.");
+                continue;
+            }
+
+            System.out.print("Enter the annual interest rate (8-12%): ");
+            annualRate = scanner.nextDouble();
+            if (annualRate < 8 || annualRate > 12) {
+                System.out.println("Interest rate must be between 8% and 12%. Please try again.");
+                continue;
+            }
+
+            System.out.print("Enter the duration in years (maximum 5 years): ");
+            years = scanner.nextInt();
+            if (years < 1 || years > 5) {
+                System.out.println("Duration must be between 1 and 5 years. Please try again.");
+                continue;
+            }
+
+            months = years * 12;
+            monthlyRate = annualRate / 12 / 100;
+            maturityAmount = principal * Math.pow(1 + monthlyRate, months);
+            fee = maturityAmount * feeRate;
+            finalAmount = maturityAmount - fee;
+
+            System.out.printf("Maturity Amount (before fee): Rs. %.2f%n", maturityAmount);
+            System.out.printf("Processing Fee: Rs. %.2f%n", fee);
+            System.out.printf("Final Amount (after fee): Rs. %.2f%n", finalAmount);
+        }
+        scanner.close();
+    }
+}       
